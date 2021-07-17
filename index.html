@@ -5,22 +5,27 @@
     <title>Title</title>
     <link rel="stylesheet" href="css/stylesheet.css">
     <!-- Import Graph Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.19.0/cytoscape.min.js" integrity="sha512-TOWs340KHbJjY/a2SCtsUcXYBg7/xPX72NKpJ3VITogkHJTy2yMyoJE0pxJjumMGHCg46ud89KO5q1Toe3Aeaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Import Graph init -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.19.0/cytoscape.min.js"
+            integrity="sha512-TOWs340KHbJjY/a2SCtsUcXYBg7/xPX72NKpJ3VITogkHJTy2yMyoJE0pxJjumMGHCg46ud89KO5q1Toe3Aeaw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="Visualizer">
-            Dies ist Inhalt für den Visualizer!
-            <div id="cy">
-
-                    <script src="js/initGraphConfig.js"></script>
-                    <script src="js/initTestGraph.js"></script>
-            </div>
+<div class="container">
+    <div class="Visualizer">
+        Visualizer Content goes here!
+        <div id="cy">
+            <script src="js/initGraphConfig.js"></script>
+            <script src="js/initTestGraph.js"></script>
         </div>
-        <div class="Sidebar">
-            Dies ist Inhalt der Sidebar!
+    </div>
+    <div class="Sidebar">
+        <script src="js/graphUtils.js"></script>
+        Sidebar content goes here
+        <div class="buttons">
+            <button type="button" onclick="randomizeGraph()">Randomize!</button>
+            <button type="button" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
         </div>
-      </div>
+    </div>
+</div>
 </body>
 </html>

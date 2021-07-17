@@ -1,0 +1,16 @@
+[
+  {
+    selector: 'node' ,
+    style: {
+      shape: 'hexagon',
+      label: 'data(antCount)'
+    }
+  },
+  {
+    selector: 'edge' ,
+    style: {
+      label: 'data(pheromoneCount)'
+    }
+  }
+
+]
