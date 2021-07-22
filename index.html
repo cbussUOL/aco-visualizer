@@ -14,17 +14,22 @@
     <div class="Visualizer">
         Visualizer Content goes here!
         <div id="cy">
-            <script src="js/initGraphConfig.js"></script>
-            <script src="js/initTestGraph.js"></script>
+            <script src="js/InitGraphConfig.js"></script>
+            <script src="js/GraphUtils.js"></script>
+            <script src="js/InitTestGraph.js"></script>
         </div>
     </div>
     <div class="Sidebar">
-        <script src="js/graphUtils.js"></script>
         Sidebar content goes here
         <div class="buttons">
             <button type="button" onclick="randomizeGraph()">Randomize!</button>
             <button type="button" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
         </div>
+        <div class="buttons">
+            <button type="button" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start</button>
+            <button type="button" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End</button>
+        </div>
+
     </div>
 </div>
 </body>

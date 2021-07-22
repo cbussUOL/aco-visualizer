@@ -15,6 +15,18 @@ var cy = cytoscape({
                 'label' : 'data(pheromoneCount)',
                 'line-color': 'mapData(pheromoneCount, 0, 100,  #ffcc66, #ff0000)'
             }
+        },
+        {
+            selector: '.startNode' ,
+            style: {
+                'background-color' : 'GREEN'
+            }
+        },
+        {
+            selector: '.endNode' ,
+            style: {
+                'background-color' : 'RED'
+            }
         }
 
     ],

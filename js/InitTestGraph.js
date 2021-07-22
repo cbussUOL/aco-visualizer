@@ -112,7 +112,8 @@ let options = {
     // Lower temperature threshold (below this point the layout will end)
     minTemp: 1.0
 };
-
+setAsStartNode(cy.$("#n0"));
+setAsEndNode(cy.$('#n6'));
 cy.layout(options);
 cy.layout(options).run();
 cy.fit();
