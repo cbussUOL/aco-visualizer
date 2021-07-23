@@ -17,6 +17,8 @@
             <script src="js/InitGraphConfig.js"></script>
             <script src="js/GraphUtils.js"></script>
             <script src="js/InitTestGraph.js"></script>
+            <script src="js/aco/Ant.js"></script>
+            <script src="js/aco/AntColony.js"></script>
         </div>
     </div>
     <div class="Sidebar">
@@ -28,6 +30,7 @@
         <div class="buttons">
             <button type="button" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start</button>
             <button type="button" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End</button>
+            <button type="button" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
         </div>
 
     </div>

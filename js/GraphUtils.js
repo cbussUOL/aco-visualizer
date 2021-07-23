@@ -50,9 +50,3 @@ function setAsEndNode(node) {
         endNode.addClass('endNode');
     }
 }
-
-function calcDistanceBetweenPoints(point1, point2) {
-    let a = point1.position('x') - point2.position('x')
-    let b = point1.position('y') - point2.position('y')
-    return Math.sqrt(a * a + b * b);
-}

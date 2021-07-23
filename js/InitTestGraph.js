@@ -11,7 +11,6 @@ var eles = cy.add([
     {group: 'edges', data: {id: 'e1', source: 'n0', target: 'n2', pheromoneCount: 10}},
     {group: 'edges', data: {id: 'e2', source: 'n0', target: 'n3', pheromoneCount: 20}},
     {group: 'edges', data: {id: 'e3', source: 'n1', target: 'n4', pheromoneCount: 30}},
-    {group: 'edges', data: {id: 'e4', source: 'n2', target: 'n4', pheromoneCount: 40}},
     {group: 'edges', data: {id: 'e5', source: 'n2', target: 'n4', pheromoneCount: 50}},
     {group: 'edges', data: {id: 'e6', source: 'n2', target: 'n5', pheromoneCount: 60}},
     {group: 'edges', data: {id: 'e7', source: 'n3', target: 'n5', pheromoneCount: 70}},
