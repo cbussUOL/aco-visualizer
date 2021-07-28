@@ -13,6 +13,7 @@ class AntColony {
         this.population = [];
         this.paused = false;
         this.randomFactor = randomFactor;
+        this.timesResultChanged = 0;
     }
 
     generateRandomSolution() {
@@ -45,28 +46,35 @@ class AntColony {
             //this.bestSolution = this.population[0].route;
             //this.bestSolutionLength = this.population[0].calcRouteLength();
         }else {
-            this.population.forEach(function (a) {
-                if (calcRouteLength(a.route) < this.bestSolutionLength) {
-                    this.bestSolution = a.route;
-                    this.bestSolutionLength = calcRouteLength(a.route);
+            for (const a of this.population) {
+                if (a.route[a.route.length - 1] === endNode) {
+                    console.log(a.route);
+                    if (calcRouteLength(a.route) < this.bestSolutionLength) {
+                        this.bestSolution = a.route;
+                        this.bestSolutionLength = calcRouteLength(a.route);
+                        this.timesResultChanged++;
+                    }
                 }
-            });
+            }
         }
     }
 
     //Updates Pheromone Counts after completed iteration
     updatePheromones() {
         let edges = cy.edges();
+        //Beta evaporation
         for (let i = 0; i < edges.length; i++) {
             edges[i].data('pheromoneCount', edges[i].data('pheromoneCount') * this.evaporation);
         }
-        for (const a of this.population) {
+
+        for (let i = 0; i < this.population.length; i++){
+            const a = this.population[i];
             let contribution = this.Q / calcRouteLength(a.route);
-            for (let j = 0; j < edges.length-1; j++) {
-                let id = a.route[j].id();
-                let element = edges.getElementById(id);
+            for (let j = 0; j < a.route.length-1; j++) {
+                let element = a.route[j].edgesWith(a.route[j+1]);
+                console.log(element.data('pheromoneCount'))
                 let newContribution = element.data('pheromoneCount') + contribution;
-                element.data('pheromoneCount', newContribution);
+                element.data('pheromoneCount', element.data('pheromoneCount') + newContribution);
             }
         }
     }
@@ -89,16 +97,19 @@ class AntColony {
             this.updateBest();
         }
         console.log("Best tour length: " + this.bestSolutionLength);
-        console.log("Best Solution: " + this.bestSolution.toString());
+        console.log("Best Solution: " + this.bestSolution);
     }
 
 
     moveAnts() {
-        this.population.forEach(function (a) {
-            if (!a.currentNode === endNode) {
-                a.chooseNextNode();
+        for (const a of this.population) {
+            while (a.currentNode !== endNode) {
+                console.log('entered node chooser')
+                a.visitNode(a.chooseNextNode());
             }
-        });
+            console.log('Calculated Route:')
+            console.log(a.route);
+        }
     }
 }
 
@@ -125,6 +136,6 @@ function calcRouteLength(route) {
     return routeLength;
 }
 
-let antColony = new AntColony(500, 200, 5, 0.5, 500, 500, 0.01);
+let antColony = new AntColony(2, 2, 5, 0.5, 500, 500, 0.01);
 //antColony.generateRandomSolution();
 antColony.start();
