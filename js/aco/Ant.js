@@ -1,21 +1,29 @@
 class Ant {
 
     constructor() {
-        this.route = [];
-        this.route.push(startNode);
+        this.route = cy.collection();
+        this.route.add(startNode);
+        this.routeEdges = cy.collection();
         this.currentNode = startNode;
-        this.visited = new Map();
+        this.visited = cy.collection();
     }
 
-    visitNode(node) {
-        this.route.push(node);
-        this.visited.set(node.id(), true);
-        this.currentNode = node;
+    visitEdge(edge) {
+        console.log(edge);
+        this.routeEdges.add(edge);
+        let connectedNodes = edge.connectedNodes();
+        for (let i = 0; i < connectedNodes.length; i++) {
+            if (this.currentNode !== connectedNodes[i]) {
+                this.currentNode = connectedNodes[i];
+                this.route.add(connectedNodes[i]);
+            }
+        }
+        this.visited.add(edge.connectedNodes())
     }
 
 
-    chooseNextNode() {
-        let edges  = this.route[this.route.length-1].connectedEdges();
+    chooseNextEdge() {
+        let edges  = this.currentNode.connectedEdges();
         let targets  = edges.targets();
         //Rolls if Random nodes should be chosen
 /*        if (Math.random() < antColony.randomFactor) {
@@ -25,13 +33,13 @@ class Ant {
         console.log(probabilities)
         let r = Math.random();
         let total = 0;
-        for (let i = 0; i < targets.length; i++){
+        for (let i = 0; i < edges.length; i++){
             total += probabilities[i];
             console.log('Total vs R')
             console.log(total)
             console.log(r)
             if (total >= r) {
-                return i;
+                return edges[i];
             }
         }
         throw "We aint found shit"
@@ -42,24 +50,35 @@ class Ant {
     //The two factors are weighted by alpha and beta respectively
     calcProbabilities() {
         let edges  = this.currentNode.connectedEdges();
+        //console.log(edges);
         let probabilities = [];
         let pheromone = 0.0;
         for (let i = 0; i < edges.length; i++) {
-            //TODO edge liste hinzufügen
-            if (this.route.includes(edges[i])) {
+            //console.log("entered inner loop of calc:")
+            //console.log(this.routeEdges);
+            //console.log(this.routeEdges.contains(edges[i]))
+            if (!this.routeEdges.contains(edges[i])) {
+                //console.log("entered contains check")
+                //console.log(Math.pow(edges[i].data('pheromoneCount'), antColony.alpha))
                 pheromone +=
-                    Math.pow(edges[i].data('pheromoneCount'), antColony.alpha) * Math.pow(1.0 / calcDistanceBetweenPoints(this.route[this.route.length-1],edges[i].target()), antColony.beta);
+                    Math.pow(edges[i].data('pheromoneCount'), antColony.alpha) * Math.pow(1.0 / calcDistanceBetweenPoints(edges[i].connectedNodes()[0],edges[i].connectedNodes()[1]), antColony.beta);
+                //console.log(pheromone);
             }
         }
         for (let j = 0; j < edges.length; j++) {
-            if (this.visited.get(edges[j].id())) {
+            if (this.routeEdges.contains(edges[j])) {
                 probabilities[j] = 0.0;
             } else {
+                //console.log("numerator case entered")
                 let numerator =
-                    Math.pow(edges[j].data('pheromoneCount'), antColony.alpha) * Math.pow(1.0 / calcDistanceBetweenPoints(this.route[this.route.length-1],edges[j].target()), antColony.beta);
+                    Math.pow(edges[j].data('pheromoneCount'), antColony.alpha) * Math.pow(1.0 / calcDistanceBetweenPoints(edges[j].connectedNodes()[0],edges[j].connectedNodes()[1]), antColony.beta);
                 probabilities[j] = numerator / pheromone;
+                //console.log(numerator);
+                //console.log(pheromone);
+                //console.log(probabilities[j])
             }
         }
+        console.log(probabilities);
         return probabilities;
     }
 

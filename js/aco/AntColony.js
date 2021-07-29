@@ -105,7 +105,7 @@ class AntColony {
         for (const a of this.population) {
             while (a.currentNode !== endNode) {
                 console.log('entered node chooser')
-                a.visitNode(a.chooseNextNode());
+                a.visitEdge(a.chooseNextEdge());
             }
             console.log('Calculated Route:')
             console.log(a.route);
@@ -124,7 +124,7 @@ function resetPheromoneTrails() {
     let edges = cy.edges();
     console.log(edges.length);
     for (let i = 0; i < edges.length; i++) {
-        edges[i].data('pheromoneCount', 0)
+        edges[i].data('pheromoneCount', 1)
     }
 }
 

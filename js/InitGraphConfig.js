@@ -6,7 +6,7 @@ var cy = cytoscape({
             selector: 'node' ,
             style: {
                 shape: 'hexagon',
-                label: 'data(antCount)'
+                label: 'data(id)'
             }
         },
         {
