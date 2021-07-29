@@ -69,6 +69,8 @@ class AntColony {
 
         for (let i = 0; i < this.population.length; i++){
             const a = this.population[i];
+            console.log(a.route);
+            console.log(a.routeEdges);
             let contribution = this.Q / calcRouteLength(a.route);
             for (let j = 0; j < a.route.length-1; j++) {
                 let element = a.route[j].edgesWith(a.route[j+1]);
@@ -108,7 +110,7 @@ class AntColony {
                 a.visitEdge(a.chooseNextEdge());
             }
             console.log('Calculated Route:')
-            console.log(a.route);
+            console.log(a.routeEdges);
         }
     }
 }
