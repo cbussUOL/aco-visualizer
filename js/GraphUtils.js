@@ -50,3 +50,21 @@ function setAsEndNode(node) {
         endNode.addClass('endNode');
     }
 }
+
+function addACONode() {
+    let node = cy.add({
+        group: 'nodes'
+    });
+    connectNodeToNetwork(node);
+}
+
+function connectNodeToNetwork(node) {
+    for (let i = 0; i < cy.nodes().length-1; i++){
+        if (node !== cy.nodes()[i]) {
+            let edge = cy.add({
+                group: 'edges',
+                data: {source: node.id(), target: cy.nodes()[i].id(), pheromoneCount: 1}
+            });
+        }
+    }
+}

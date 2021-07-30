@@ -1,31 +1,33 @@
 //Manages Colony of Ant Objects and passes results
 class AntColony {
-    constructor(popSize, maxIterations, alpha, beta, evaporation, Q, randomFactor) {
-        this.evaporation = evaporation;
-        this.Q = Q;
-        this.alpha = alpha;
-        this.beta = beta;
-        this.maxPopSize = popSize;
+    constructor() {
+        this.evaporation = 0.5;
+        this.Q = 500;
+        this.alpha = 1;
+        this.beta = 5;
+        this.maxPopSize = 10;
         this.curPopSize = 0;
-        this.maxIterations = maxIterations;
+        this.maxIterations = 2;
         this.bestSolution = null;
         this.bestSolutionLength = null;
         this.population = [];
         this.paused = false;
-        this.randomFactor = randomFactor;
+        this.randomFactor = 0.01;
         this.timesResultChanged = 0;
     }
 
     generateRandomSolution() {
         let route = [];
         route.push(startNode);
+        console.log(route);
         while (!route.includes(endNode)) {
-            let edges = route[route.length - 1].connectedEdges();
-            let targets = edges.targets();
+            let edges = route[route.length-1].connectedEdges();
+            let targets = edges.connectedNodes();
             const chosenNode = targets[Math.floor(Math.random() * targets.length)];
             if (!route.includes(chosenNode)) {
                 route.push(chosenNode);
             }
+            console.log(route);
         }
         return route;
     }
@@ -62,22 +64,29 @@ class AntColony {
     //Updates Pheromone Counts after completed iteration
     updatePheromones() {
         let edges = cy.edges();
+        let pheromones = new Array(edges.length);
+        for (let i = 0; i < edges.length; i++ ){
+            pheromones[i] = edges[i].data('pheromoneCount');
+        }
+        console.log(pheromones);
         //Beta evaporation
         for (let i = 0; i < edges.length; i++) {
-            edges[i].data('pheromoneCount', edges[i].data('pheromoneCount') * this.evaporation);
+            pheromones[i] *= this.evaporation;
         }
-
+        console.log(pheromones);
         for (let i = 0; i < this.population.length; i++){
             const a = this.population[i];
-            console.log(a.route);
             console.log(a.routeEdges);
-            let contribution = this.Q / calcRouteLength(a.route);
-            for (let j = 0; j < a.route.length-1; j++) {
-                let element = a.route[j].edgesWith(a.route[j+1]);
-                console.log(element.data('pheromoneCount'))
-                let newContribution = element.data('pheromoneCount') + contribution;
-                element.data('pheromoneCount', element.data('pheromoneCount') + newContribution);
+            console.log(a.visited);
+            let contribution = new Array(edges.length);
+            contribution.fill(0);
+            for (let j = 0; j < edges.length; j++) {
+                let element = a.routeEdges[j];
+                if (a.routeEdges.contains(element)){
+                   contribution[j] += this.Q / calcRouteLength(a.routeEdges.connectedNodes())
+                }
             }
+            console.log(contribution);
         }
     }
 
@@ -90,9 +99,12 @@ class AntColony {
     }
 
     solve() {
+        console.log("Initializing population...");
         this.initPopulation();
+        console.log("Updating best solution...");
         this.updateBest();
         resetPheromoneTrails();
+        console.log("Starting Algorithm...")
         for (let i = 0; i < this.maxIterations; i++) {
             this.moveAnts();
             this.updatePheromones();
@@ -111,6 +123,7 @@ class AntColony {
             }
             console.log('Calculated Route:')
             console.log(a.routeEdges);
+            console.log(calcRouteLength(a.routeEdges.connectedNodes()))
         }
     }
 }
@@ -138,6 +151,6 @@ function calcRouteLength(route) {
     return routeLength;
 }
 
-let antColony = new AntColony(2, 2, 5, 0.5, 500, 500, 0.01);
+let antColony = new AntColony();
 //antColony.generateRandomSolution();
 antColony.start();

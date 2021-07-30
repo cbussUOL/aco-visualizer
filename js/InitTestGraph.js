@@ -1,5 +1,5 @@
 // Example Test Graph
-var eles = cy.add([
+/*var eles = cy.add([
     {group: 'nodes', data: {id: 'n0', antCount: '10'}},
     {group: 'nodes', data: {id: 'n1', antCount: '20'}},
     {group: 'nodes', data: {id: 'n2', antCount: '30'}},
@@ -17,7 +17,11 @@ var eles = cy.add([
     {group: 'edges', data: {id: 'e8', source: 'n4', target: 'n6', pheromoneCount: 80}},
     {group: 'edges', data: {id: 'e9', source: 'n5', target: 'n6', pheromoneCount: 90}}
 
-]);
+]);*/
+let networkSize = 6;
+for (let i = 0; i < networkSize; i++){
+    addACONode();
+}
 
 let options = {
     name: 'cose',
@@ -111,8 +115,10 @@ let options = {
     // Lower temperature threshold (below this point the layout will end)
     minTemp: 1.0
 };
-setAsStartNode(cy.getElementById('n0'));
-setAsEndNode(cy.getElementById('n6'));
+setAsStartNode(cy.nodes().first());
+console.log(startNode);
+setAsEndNode(cy.nodes().last());
+console.log(endNode);
 cy.layout(options);
 cy.layout(options).run();
 cy.fit();

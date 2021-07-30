@@ -9,16 +9,16 @@ class Ant {
     }
 
     visitEdge(edge) {
-        console.log(edge);
-        this.routeEdges.add(edge);
+        this.routeEdges.push(edge);
         let connectedNodes = edge.connectedNodes();
         for (let i = 0; i < connectedNodes.length; i++) {
             if (this.currentNode !== connectedNodes[i]) {
                 this.currentNode = connectedNodes[i];
-                this.route.add(connectedNodes[i]);
+                this.route.push(connectedNodes[i]);
             }
         }
-        this.visited.add(edge.connectedNodes())
+        this.visited.push(edge.connectedNodes())
+        console.log(this.visited.contains(connectedNodes[0]));
     }
 
 
