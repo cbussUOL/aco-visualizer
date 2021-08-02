@@ -1,5 +1,6 @@
 let startNode;
 let endNode;
+let nodeIndex = 0;
 
 let randomConfig = {
     name: 'random',
@@ -27,7 +28,10 @@ function fitGraphToScreen() {
 }
 
 function setAsStartNode(node) {
-    if (node.same(startNode)) {
+    if (node.length === 0) {
+        alert('Please Select a Node')
+    } else
+    if (node.same(endNode)) {
         alert('You cant set Start and End to the Same Node')
     } else {
 
@@ -40,6 +44,9 @@ function setAsStartNode(node) {
 }
 
 function setAsEndNode(node) {
+    if (node.length === 0) {
+        alert('Please Select a Node')
+    } else
     if (node.same(startNode)) {
         alert('You cant set Start and End to the Same Node')
     } else {
@@ -53,8 +60,12 @@ function setAsEndNode(node) {
 
 function addACONode() {
     let node = cy.add({
-        group: 'nodes'
+        group: 'nodes',
+        data: {
+            id: 'N'+ nodeIndex
+        }
     });
+    nodeIndex++;
     connectNodeToNetwork(node);
 }
 
@@ -67,4 +78,13 @@ function connectNodeToNetwork(node) {
             });
         }
     }
+}
+
+function routeToString(route) {
+    let routeString = route.map(function( ele ){
+        return ele.id();
+    });
+
+    console.log(routeString);
+    return routeString;
 }

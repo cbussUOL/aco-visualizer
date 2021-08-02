@@ -2,23 +2,32 @@ class Ant {
 
     constructor() {
         this.route = cy.collection();
-        this.route.add(startNode);
+        this.route.push(startNode);
+        console.log(this.route);
         this.routeEdges = cy.collection();
         this.currentNode = startNode;
         this.visited = cy.collection();
     }
 
     visitEdge(edge) {
-        this.routeEdges.push(edge);
         let connectedNodes = edge.connectedNodes();
         for (let i = 0; i < connectedNodes.length; i++) {
+            console.log('Is node equal to current?')
+            console.log(this.currentNode);
+            console.log(connectedNodes[i]);
+            console.log(this.currentNode === connectedNodes[i])
             if (this.currentNode !== connectedNodes[i]) {
+                console.log("hello?");
+                console.log(this.currentNode);
+                this.routeEdges.push(edge);
                 this.currentNode = connectedNodes[i];
                 this.route.push(connectedNodes[i]);
+                console.log(this.currentNode);
+                break;
             }
         }
         this.visited.push(edge.connectedNodes())
-        console.log(this.visited.contains(connectedNodes[0]));
+        console.log(this.visited);
     }
 
 
@@ -42,7 +51,7 @@ class Ant {
                 return edges[i];
             }
         }
-        throw "We aint found shit"
+        throw "We ant found shit"
 
     }
     //Calculates the probabilities of a certain edge being chosen
@@ -51,13 +60,13 @@ class Ant {
     calcProbabilities() {
         let edges  = this.currentNode.connectedEdges();
         //console.log(edges);
-        let probabilities = [];
+        let probabilities = [edges.length];
         let pheromone = 0.0;
         for (let i = 0; i < edges.length; i++) {
             //console.log("entered inner loop of calc:")
             //console.log(this.routeEdges);
             //console.log(this.routeEdges.contains(edges[i]))
-            if (!this.routeEdges.contains(edges[i])) {
+            if (!this.routeEdges.includes(edges[i])) {
                 //console.log("entered contains check")
                 //console.log(Math.pow(edges[i].data('pheromoneCount'), antColony.alpha))
                 pheromone +=
@@ -66,7 +75,12 @@ class Ant {
             }
         }
         for (let j = 0; j < edges.length; j++) {
-            if (this.routeEdges.contains(edges[j])) {
+            console.log("Route contains edge check:")
+            console.log(this.routeEdges)
+            console.log(edges[j])
+            console.log(this.routeEdges.includes(edges[j]))
+            if (this.routeEdges.includes(edges[j])) {
+                console.log('already contains route')
                 probabilities[j] = 0.0;
             } else {
                 //console.log("numerator case entered")
@@ -75,7 +89,6 @@ class Ant {
                 probabilities[j] = numerator / pheromone;
                 //console.log(numerator);
                 //console.log(pheromone);
-                //console.log(probabilities[j])
             }
         }
         console.log(probabilities);

@@ -7,7 +7,8 @@ class AntColony {
         this.beta = 5;
         this.maxPopSize = 10;
         this.curPopSize = 0;
-        this.maxIterations = 2;
+        this.curIteration = 0;
+        this.maxIterations = 10;
         this.bestSolution = null;
         this.bestSolutionLength = null;
         this.population = [];
@@ -17,17 +18,17 @@ class AntColony {
     }
 
     generateRandomSolution() {
-        let route = [];
+        let route = cy.collection();
         route.push(startNode);
         console.log(route);
+        //console.log(endNode);
         while (!route.includes(endNode)) {
             let edges = route[route.length-1].connectedEdges();
             let targets = edges.connectedNodes();
-            const chosenNode = targets[Math.floor(Math.random() * targets.length)];
+            let chosenNode = targets[Math.floor(Math.random() * targets.length)];
             if (!route.includes(chosenNode)) {
                 route.push(chosenNode);
             }
-            console.log(route);
         }
         return route;
     }
@@ -45,6 +46,8 @@ class AntColony {
         if (this.bestSolution === null) {
             this.bestSolution = this.generateRandomSolution();
             this.bestSolutionLength = calcRouteLength(this.bestSolution);
+            document.getElementById('curBest').innerHTML = routeToString(this.bestSolution) + ' (Initial Random Result)';
+            document.getElementById('curBestLength').innerHTML = this.bestSolutionLength + ' (Initial Random Result)';
             //this.bestSolution = this.population[0].route;
             //this.bestSolutionLength = this.population[0].calcRouteLength();
         }else {
@@ -55,6 +58,9 @@ class AntColony {
                         this.bestSolution = a.route;
                         this.bestSolutionLength = calcRouteLength(a.route);
                         this.timesResultChanged++;
+                        document.getElementById('curBest').innerHTML = routeToString(this.bestSolution);
+                        document.getElementById('curBestLength').innerHTML = this.bestSolutionLength;
+                        document.getElementById('resultChangedCount').innerHTML = this.timesResultChanged;
                     }
                 }
             }
@@ -65,6 +71,8 @@ class AntColony {
     updatePheromones() {
         let edges = cy.edges();
         let pheromones = new Array(edges.length);
+        let contribution = new Array(edges.length);
+        contribution.fill(0);
         for (let i = 0; i < edges.length; i++ ){
             pheromones[i] = edges[i].data('pheromoneCount');
         }
@@ -75,11 +83,9 @@ class AntColony {
         }
         console.log(pheromones);
         for (let i = 0; i < this.population.length; i++){
-            const a = this.population[i];
+            let a = this.population[i];
             console.log(a.routeEdges);
             console.log(a.visited);
-            let contribution = new Array(edges.length);
-            contribution.fill(0);
             for (let j = 0; j < edges.length; j++) {
                 let element = a.routeEdges[j];
                 if (a.routeEdges.contains(element)){
@@ -88,37 +94,44 @@ class AntColony {
             }
             console.log(contribution);
         }
+        for (let i = 0; i < edges.length; i++) {
+            edges[i].data('pheromoneCount', pheromones[i] + contribution[i]);
+        }
     }
 
 
     start() {
-        for (let i = 0; i <= this.maxIterations; i++) {
-            console.log("Iteration #" + i + ':')
-            this.solve();
-        }
+            console.log('Starting Algorithm...');
+            this.initializeACO();
     }
 
-    solve() {
+    initializeACO() {
         console.log("Initializing population...");
         this.initPopulation();
         console.log("Updating best solution...");
         this.updateBest();
         resetPheromoneTrails();
+
+    }
+
+    doIteration() {
+        document.getElementById('curIteration').innerHTML = this.curIteration;
+        this.moveAnts();
+        this.updatePheromones();
+        this.updateBest()
         console.log("Starting Algorithm...")
-        for (let i = 0; i < this.maxIterations; i++) {
-            this.moveAnts();
-            this.updatePheromones();
-            this.updateBest();
-        }
         console.log("Best tour length: " + this.bestSolutionLength);
         console.log("Best Solution: " + this.bestSolution);
+        this.curIteration++;
     }
 
 
     moveAnts() {
         for (const a of this.population) {
-            while (a.currentNode !== endNode) {
+            while (!a.routeEdges.connectedNodes().includes(endNode)) {
                 console.log('entered node chooser')
+                console.log(a.currentNode)
+                console.log(endNode);
                 a.visitEdge(a.chooseNextEdge());
             }
             console.log('Calculated Route:')
@@ -152,5 +165,3 @@ function calcRouteLength(route) {
 }
 
 let antColony = new AntColony();
-//antColony.generateRandomSolution();
-antColony.start();

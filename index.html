@@ -17,8 +17,8 @@
             <script src="js/InitGraphConfig.js"></script>
             <script src="js/GraphUtils.js"></script>
             <script src="js/InitTestGraph.js"></script>
-<!--            <script src="js/aco/Ant.js"></script>
-            <script src="js/aco/AntColony.js"></script>-->
+            <script src="js/aco/Ant.js"></script>
+            <script src="js/aco/AntColony.js"></script>
         </div>
     </div>
     <div class="Sidebar">
@@ -32,7 +32,15 @@
             <button type="button" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End</button>
             <button type="button" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
         </div>
-
+        <div class="buttons">
+            <button type="button" onclick="addACONode()">Add Another ACO Node</button>
+            <button type="button" onclick="antColony.initializeACO()">Init ACO</button>
+            <button type="button" onclick="antColony.doIteration()">Do ACO Iteration</button>
+        </div>
+            Current Best Solution: <p id = "curBest"> 0 </p>
+            Current Best Solution Length: <p id = 'curBestLength'> 0 </p>
+            Times Result Changed: <p id = 'resultChangedCount'> 0 </p>
+            Current Iteration: <p id = 'curIteration'> 0 </p>
     </div>
 </div>
 </body>
