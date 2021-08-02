@@ -164,4 +164,8 @@ function calcRouteLength(route) {
     return routeLength;
 }
 
+function resetACO() {
+    antColony = new AntColony();
+}
+
 let antColony = new AntColony();
