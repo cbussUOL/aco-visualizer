@@ -76,9 +76,9 @@ class Ant {
         }
         for (let j = 0; j < edges.length; j++) {
             console.log("Route contains edge check:")
-            console.log(this.routeEdges)
-            console.log(edges[j])
-            console.log(this.routeEdges.includes(edges[j]))
+            //console.log(this.routeEdges)
+            //console.log(edges[j])
+            //console.log(this.routeEdges.includes(edges[j]))
             if (this.routeEdges.includes(edges[j])) {
                 console.log('already contains route')
                 probabilities[j] = 0.0;

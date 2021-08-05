@@ -33,6 +33,27 @@ class AntColony {
         return route;
     }
 
+/*    generateRandomSolution() {
+        let route = cy.collection();
+        let currentNode = startNode;
+        let routeNodes = [startNode];
+        while (!route.connectedNodes().includes(endNode)) {
+            let edges = currentNode.connectedEdges();
+            let chosenEdge = edges[Math.floor(Math.random() * edges.length)];
+            if (!route.includes(chosenEdge)) {
+                route.push(chosenEdge);
+                for (const n of chosenEdge.connectedNodes()){
+                    if (n !== currentNode) {
+                        routeNodes.push(n);
+                        currentNode = n;
+                        break;
+                    }
+                }
+            }
+        }
+        return routeNodes;
+    }*/
+
     //Initializes Population from Scratch
     initPopulation() {
         //TODO add support for flexible pop sizes
@@ -76,24 +97,27 @@ class AntColony {
         for (let i = 0; i < edges.length; i++ ){
             pheromones[i] = edges[i].data('pheromoneCount');
         }
-        console.log(pheromones);
+        //console.log(pheromones);
         //Beta evaporation
         for (let i = 0; i < edges.length; i++) {
             pheromones[i] *= this.evaporation;
         }
-        console.log(pheromones);
+        //console.log(pheromones);
         for (let i = 0; i < this.population.length; i++){
             let a = this.population[i];
             console.log(a.routeEdges);
             console.log(a.visited);
+            let antContribution = this.Q / calcRouteLength(a.routeEdges.connectedNodes())
             for (let j = 0; j < edges.length; j++) {
                 let element = a.routeEdges[j];
-                if (a.routeEdges.contains(element)){
-                   contribution[j] += this.Q / calcRouteLength(a.routeEdges.connectedNodes())
+                if (a.routeEdges.includes(element)){
+                    contribution[j] += antContribution;
                 }
             }
-            console.log(contribution);
+            //console.log(contribution);
         }
+        console.log(pheromones)
+        console.log(contribution)
         for (let i = 0; i < edges.length; i++) {
             edges[i].data('pheromoneCount', pheromones[i] + contribution[i]);
         }
@@ -169,3 +193,7 @@ function resetACO() {
 }
 
 let antColony = new AntColony();
+cy.on('move' ,function (event) {
+    console.log('moved')
+    antColony.bestSolutionLength = calcRouteLength(antColony.bestSolution);
+});

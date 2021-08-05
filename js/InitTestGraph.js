@@ -18,10 +18,14 @@
     {group: 'edges', data: {id: 'e9', source: 'n5', target: 'n6', pheromoneCount: 90}}
 
 ]);*/
-let networkSize = 6;
+
+
+
+let networkSize = 4;
 for (let i = 0; i < networkSize; i++){
     addACONode();
 }
+
 
 let options = {
     name: 'cose',
