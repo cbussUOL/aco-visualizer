@@ -39,10 +39,16 @@
             <button type="button" onclick="antColony.doIteration()">Do ACO Iteration</button>
             <button type="button" onclick="resetACO()">Reset ACO</button>
         </div>
+        <p>Set Beta Evaporation Percentage: </p>
+        <div class="slidercontainer">
+            <input type="range" min = '0' max="100" value="50" class="slider" id="evapSlider" onchange="updateEvap(value)"> <label for="evapSlider" id="evapLabel">50%</label>
+        </div>
+        <div>
             Current Best Solution: <p id = "curBest"> 0 </p>
             Current Best Solution Length: <p id = 'curBestLength'> 0 </p>
             Times Result Changed: <p id = 'resultChangedCount'> 0 </p>
             Current Iteration: <p id = 'curIteration'> 0 </p>
+        </div>
     </div>
 </div>
 </body>

@@ -20,9 +20,7 @@ class AntColony {
     generateRandomSolution() {
         let route = cy.collection();
         route.push(startNode);
-        console.log(route);
-        //console.log(endNode);
-        while (!route.includes(endNode)) {
+        while (!route.same(cy.nodes())) {
             let edges = route[route.length-1].connectedEdges();
             let targets = edges.connectedNodes();
             let chosenNode = targets[Math.floor(Math.random() * targets.length)];
@@ -135,6 +133,11 @@ class AntColony {
         console.log("Updating best solution...");
         this.updateBest();
         resetPheromoneTrails();
+        cy.on('dragfreeon' ,function (event) {
+            console.log('moved')
+            antColony.bestSolutionLength = calcRouteLength(antColony.bestSolution);
+            document.getElementById("curBestLength").innerHTML = antColony.bestSolutionLength;
+        });
 
     }
 
@@ -145,14 +148,14 @@ class AntColony {
         this.updateBest()
         console.log("Starting Algorithm...")
         console.log("Best tour length: " + this.bestSolutionLength);
-        console.log("Best Solution: " + this.bestSolution);
+        console.log("Best Solution: " + routeToString(this.bestSolution));
         this.curIteration++;
     }
 
 
     moveAnts() {
         for (const a of this.population) {
-            while (!a.routeEdges.connectedNodes().includes(endNode)) {
+            while (!a.routeEdges.connectedNodes().same(cy.nodes())) {
                 console.log('entered node chooser')
                 console.log(a.currentNode)
                 console.log(endNode);
@@ -192,8 +195,9 @@ function resetACO() {
     antColony = new AntColony();
 }
 
+function updateEvap(value) {
+    antColony.evaporation = (100-value)/100;
+    document.getElementById('evapLabel').innerHTML = value + '%';
+}
+
 let antColony = new AntColony();
-cy.on('move' ,function (event) {
-    console.log('moved')
-    antColony.bestSolutionLength = calcRouteLength(antColony.bestSolution);
-});

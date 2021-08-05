@@ -87,3 +87,17 @@
     background-color: #e6e6e6;
     border-color: #adadad;
 }
+
+.slidercontainer {
+    display: flex;
+    width: 100%; /* Width of the outside container */
+    align-items: center;
+}
+
+.slider {
+    width: 90%;
+}
+
+#evapLabel {
+
+}
