@@ -28,6 +28,8 @@ class Ant {
         }
         this.visited.push(edge.connectedNodes())
         console.log(this.visited);
+        console.log(this.routeEdges);
+        console.log(this.route);
     }
 
 
@@ -66,8 +68,8 @@ class Ant {
             //console.log("entered inner loop of calc:")
             //console.log(this.routeEdges);
             //console.log(this.routeEdges.contains(edges[i]))
-            if (!this.routeEdges.includes(edges[i])) {
-                //console.log("entered contains check")
+            if (!edges[i].connectedNodes().every(c=> this.route.includes(c))) {
+                console.log("entered contains check")
                 //console.log(Math.pow(edges[i].data('pheromoneCount'), antColony.alpha))
                 pheromone +=
                     Math.pow(edges[i].data('pheromoneCount'), antColony.alpha) * Math.pow(1.0 / calcDistanceBetweenPoints(edges[i].connectedNodes()[0],edges[i].connectedNodes()[1]), antColony.beta);
@@ -79,7 +81,12 @@ class Ant {
             //console.log(this.routeEdges)
             //console.log(edges[j])
             //console.log(this.routeEdges.includes(edges[j]))
-            if (this.routeEdges.includes(edges[j])) {
+            console.log(this.route)
+            console.log(edges[j].connectedNodes())
+            console.log(this.route.includes(edges[j].connectedNodes()[0]))
+            console.log(this.route.every(c=> edges[j].connectedNodes().includes(c)))
+            console.log(this.route.includes(edges[j].connectedNodes()[0]))
+            if (edges[j].connectedNodes().every(c=> this.route.includes(c))) {
                 console.log('already contains route')
                 probabilities[j] = 0.0;
             } else {
