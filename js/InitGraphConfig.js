@@ -7,7 +7,7 @@ var cy = cytoscape({
             style: {
                 shape: 'hexagon',
                 label: 'data(id)',
-
+                color: 'white'
             }
         },
         {
@@ -15,7 +15,7 @@ var cy = cytoscape({
             style: {
                 'label' : 'data(pheromoneCount)',
                 'line-color': 'mapData(pheromoneCount, 0, 100,  #ffcc66, #ff0000)',
-                
+                color: "white"
             }
         },
         {
