@@ -5,7 +5,7 @@ class AntColony {
         this.Q = 500;
         this.alpha = 1;
         this.beta = 5;
-        this.maxPopSize = 10;
+        this.targetPopSize = 10;
         this.curPopSize = 0;
         this.curIteration = 0;
         this.maxIterations = 10;
@@ -55,7 +55,7 @@ class AntColony {
     //Initializes Population from Scratch
     initPopulation() {
         //TODO add support for flexible pop sizes
-        for (let i = 0; i < this.maxPopSize - this.curPopSize; i++) {
+        for (let i = 0; i < this.targetPopSize - this.curPopSize; i++) {
             this.population.push(new Ant());
         }
     }
@@ -152,11 +152,15 @@ class AntColony {
         this.curIteration++;
     }
 
+    //TODO implement AutoIteration
+    autoIteration() {
+        
+    }
+
 
     moveAnts() {
         for (const a of this.population) {
             while (!a.routeEdges.connectedNodes().same(cy.nodes())) {
-                console.log('entered node chooser')
                 console.log(a.currentNode)
                 console.log(endNode);
                 a.visitEdge(a.chooseNextEdge());
@@ -199,5 +203,6 @@ function updateEvap(value) {
     antColony.evaporation = (100-value)/100;
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
+
 
 let antColony = new AntColony();

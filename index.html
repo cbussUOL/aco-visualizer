@@ -13,7 +13,6 @@
 <body>
 <div class="container">
     <div class="Visualizer">
-        Visualizer Content goes here!
         <div id="cy">
             <script src="js/InitGraphConfig.js"></script>
             <script src="js/GraphUtils.js"></script>
@@ -23,21 +22,20 @@
         </div>
     </div>
     <div class="Sidebar">
-        Sidebar content goes here
+        Graph Operations
         <div class="buttons">
             <button type="button" class="btn" onclick="randomizeGraph()">Randomize!</button>
-            <button type="button" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
+            <button type="button" class="btn" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
+            <button type="button" class="btn"  onclick="addACONode()">Add Node</button>
+            <button type="button" class="btn" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start</button>
+            <button type="button" class="btn"  onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End</button>
         </div>
+        ACO Operations
         <div class="buttons">
-            <button type="button" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start</button>
-            <button type="button" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End</button>
-            <button type="button" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
-        </div>
-        <div class="buttons">
-            <button type="button" onclick="addACONode()">Add Another ACO Node</button>
-            <button type="button" onclick="antColony.initializeACO()">Init ACO</button>
-            <button type="button" onclick="antColony.doIteration()">Do ACO Iteration</button>
-            <button type="button" onclick="resetACO()">Reset ACO</button>
+            <button type="button" class="btn"  onclick="antColony.doIteration()">Run Iteration</button>
+            <button type="button" class="btn"  onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
+            <button type="button" class="btn"   onclick="antColony.initializeACO()">Initialize ACO</button>
+            <button type="button" class="btn"  onclick="resetACO()">Reset ACO</button>
         </div>
         <p>Set Beta Evaporation Percentage: </p>
         <div class="slidercontainer">
