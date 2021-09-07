@@ -80,6 +80,7 @@ class AntColony {
                     document.getElementById('curBest').innerHTML = routeToString(this.bestSolution);
                     document.getElementById('curBestLength').innerHTML = this.bestSolutionLength;
                     document.getElementById('resultChangedCount').innerHTML = this.timesResultChanged;
+                    appendRouteTable(this.bestSolution, this.bestSolutionLength, this.curIteration);
                 }
 
             }
@@ -174,6 +175,7 @@ class AntColony {
             clearInterval(this.autoInterval);
         }
     }
+
 }
 
 function calcDistanceBetweenPoints(point1, point2) {
@@ -201,6 +203,21 @@ function calcRouteLength(route) {
 
 function resetACO() {
     antColony = new AntColony();
+}
+
+function appendRouteTable (route, routeLength, iteration) {
+    let table = document.getElementById('table');
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let newRow = tbody.insertRow();
+    let newCell = newRow.insertCell();
+    let newText = document.createTextNode(iteration);
+    newCell.appendChild(newText);
+    let newCell2 = newRow.insertCell(1);
+    let newText2 = document.createTextNode(routeToString(route));
+    newCell2.appendChild(newText2);
+    let newCell3 = newRow.insertCell(2);
+    let newText3= document.createTextNode(routeLength);
+    newCell3.appendChild(newText3);
 }
 
 function updateEvap(value) {

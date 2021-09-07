@@ -38,7 +38,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex: 1 1 1;
+    flex: 1 1;
 }
 
 .btn {
@@ -139,4 +139,9 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+#table {
+    text-align: left;
+    width: 100%;
 }
