@@ -15,6 +15,7 @@ class AntColony {
         this.paused = false;
         this.randomFactor = 0.01;
         this.timesResultChanged = 0;
+        this.autoInterval = null;
     }
 
     generateRandomSolution() {
@@ -152,11 +153,6 @@ class AntColony {
         this.curIteration++;
     }
 
-    //TODO implement AutoIteration
-    autoIteration() {
-        
-    }
-
 
     moveAnts() {
         for (const a of this.population) {
@@ -168,6 +164,16 @@ class AntColony {
             console.log('Calculated Route:')
             console.log(a.routeEdges);
             console.log(calcRouteLength(a.routeEdges.connectedNodes()))
+        }
+    }
+
+    toggleAutoIteration() {
+        let checkbox = document.getElementById("autoIterationBox");
+        if (checkbox.checked) {
+            this.autoInterval = setInterval(this.doIteration.bind(antColony), 1500);
+        }
+        else {
+            clearInterval(this.autoInterval);
         }
     }
 }

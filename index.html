@@ -26,26 +26,39 @@
         <div class="buttons">
             <button type="button" class="btn" onclick="randomizeGraph()">Randomize!</button>
             <button type="button" class="btn" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
-            <button type="button" class="btn"  onclick="addACONode()">Add Node</button>
-            <button type="button" class="btn" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start</button>
-            <button type="button" class="btn"  onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End</button>
+            <button type="button" class="btn" onclick="addACONode()">Add Node</button>
+            <button type="button" class="btn" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start
+            </button>
+            <button type="button" class="btn" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End
+            </button>
         </div>
         ACO Operations
         <div class="buttons">
-            <button type="button" class="btn"  onclick="antColony.doIteration()">Run Iteration</button>
-            <button type="button" class="btn"  onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
-            <button type="button" class="btn"   onclick="antColony.initializeACO()">Initialize ACO</button>
-            <button type="button" class="btn"  onclick="resetACO()">Reset ACO</button>
+            <button type="button" class="btn" onclick="antColony.doIteration()">Run Iteration</button>
+            <button type="button" class="btn" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
+            <button type="button" class="btn" onclick="antColony.initializeACO()">Initialize ACO</button>
+            <button type="button" class="btn" onclick="resetACO()">Reset ACO</button>
         </div>
-        <p>Set Beta Evaporation Percentage: </p>
+        <div class="checkbox">
+            <div>Auto Iteration:</div>
+            <div>
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input type="checkbox" id="autoIterationBox" onclick="antColony.toggleAutoIteration()" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <p>Set Evaporation Percentage: </p>
         <div class="slidercontainer">
-            <input type="range" min = '0' max="100" value="50" class="slider" id="evapSlider" onchange="updateEvap(value)"> <label for="evapSlider" id="evapLabel">50%</label>
+            <input type="range" min='0' max="100" value="50" class="evapSlider" id="evapSlider"
+                   onchange="updateEvap(value)"> <label for="evapSlider" id="evapLabel">50%</label>
         </div>
         <div>
-            Current Best Solution: <p id = "curBest"> 0 </p>
-            Current Best Solution Length: <p id = 'curBestLength'> 0 </p>
-            Times Result Changed: <p id = 'resultChangedCount'> 0 </p>
-            Current Iteration: <p id = 'curIteration'> 0 </p>
+            Current Best Solution: <p id="curBest"> 0 </p>
+            Current Best Solution Length: <p id='curBestLength'> 0 </p>
+            Times Result Changed: <p id='resultChangedCount'> 0 </p>
+            Current Iteration: <p id='curIteration'> 0 </p>
         </div>
     </div>
 </div>
