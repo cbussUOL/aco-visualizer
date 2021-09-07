@@ -22,7 +22,7 @@ class AntColony {
         let route = cy.collection();
         route.push(startNode);
         while (!route.same(cy.nodes())) {
-            let edges = route[route.length-1].connectedEdges();
+            let edges = route[route.length - 1].connectedEdges();
             let targets = edges.connectedNodes();
             let chosenNode = targets[Math.floor(Math.random() * targets.length)];
             if (!route.includes(chosenNode)) {
@@ -32,26 +32,26 @@ class AntColony {
         return route;
     }
 
-/*    generateRandomSolution() {
-        let route = cy.collection();
-        let currentNode = startNode;
-        let routeNodes = [startNode];
-        while (!route.connectedNodes().includes(endNode)) {
-            let edges = currentNode.connectedEdges();
-            let chosenEdge = edges[Math.floor(Math.random() * edges.length)];
-            if (!route.includes(chosenEdge)) {
-                route.push(chosenEdge);
-                for (const n of chosenEdge.connectedNodes()){
-                    if (n !== currentNode) {
-                        routeNodes.push(n);
-                        currentNode = n;
-                        break;
+    /*    generateRandomSolution() {
+            let route = cy.collection();
+            let currentNode = startNode;
+            let routeNodes = [startNode];
+            while (!route.connectedNodes().includes(endNode)) {
+                let edges = currentNode.connectedEdges();
+                let chosenEdge = edges[Math.floor(Math.random() * edges.length)];
+                if (!route.includes(chosenEdge)) {
+                    route.push(chosenEdge);
+                    for (const n of chosenEdge.connectedNodes()){
+                        if (n !== currentNode) {
+                            routeNodes.push(n);
+                            currentNode = n;
+                            break;
+                        }
                     }
                 }
             }
-        }
-        return routeNodes;
-    }*/
+            return routeNodes;
+        }*/
 
     //Initializes Population from Scratch
     initPopulation() {
@@ -70,19 +70,18 @@ class AntColony {
             document.getElementById('curBestLength').innerHTML = this.bestSolutionLength + ' (Initial Random Result)';
             //this.bestSolution = this.population[0].route;
             //this.bestSolutionLength = this.population[0].calcRouteLength();
-        }else {
+        } else {
             for (const a of this.population) {
-                if (a.route[a.route.length - 1] === endNode) {
-                    console.log(a.route);
-                    if (calcRouteLength(a.route) < this.bestSolutionLength) {
-                        this.bestSolution = a.route;
-                        this.bestSolutionLength = calcRouteLength(a.route);
-                        this.timesResultChanged++;
-                        document.getElementById('curBest').innerHTML = routeToString(this.bestSolution);
-                        document.getElementById('curBestLength').innerHTML = this.bestSolutionLength;
-                        document.getElementById('resultChangedCount').innerHTML = this.timesResultChanged;
-                    }
+                console.log(a.route);
+                if (calcRouteLength(a.route) < this.bestSolutionLength || a.route.length > this.bestSolution.length) {
+                    this.bestSolution = a.route;
+                    this.bestSolutionLength = calcRouteLength(a.route);
+                    this.timesResultChanged++;
+                    document.getElementById('curBest').innerHTML = routeToString(this.bestSolution);
+                    document.getElementById('curBestLength').innerHTML = this.bestSolutionLength;
+                    document.getElementById('resultChangedCount').innerHTML = this.timesResultChanged;
                 }
+
             }
         }
     }
@@ -93,23 +92,23 @@ class AntColony {
         let pheromones = new Array(edges.length);
         let contribution = new Array(edges.length);
         contribution.fill(0);
-        for (let i = 0; i < edges.length; i++ ){
+        for (let i = 0; i < edges.length; i++) {
             pheromones[i] = edges[i].data('pheromoneCount');
         }
         //console.log(pheromones);
         //Beta evaporation
-        for (let i = 0; i < edges.length; i++) {
-            pheromones[i] *= this.evaporation;
-        }
+        /*        for (let i = 0; i < edges.length; i++) {
+                    pheromones[i] *= this.evaporation;
+                }*/
         //console.log(pheromones);
-        for (let i = 0; i < this.population.length; i++){
+        for (let i = 0; i < this.population.length; i++) {
             let a = this.population[i];
             console.log(a.routeEdges);
             console.log(a.visited);
             let antContribution = this.Q / calcRouteLength(a.routeEdges.connectedNodes())
             for (let j = 0; j < edges.length; j++) {
                 let element = a.routeEdges[j];
-                if (a.routeEdges.includes(element)){
+                if (a.routeEdges.includes(element)) {
                     contribution[j] += antContribution;
                 }
             }
@@ -124,8 +123,8 @@ class AntColony {
 
 
     start() {
-            console.log('Starting Algorithm...');
-            this.initializeACO();
+        console.log('Starting Algorithm...');
+        this.initializeACO();
     }
 
     initializeACO() {
@@ -134,7 +133,7 @@ class AntColony {
         console.log("Updating best solution...");
         this.updateBest();
         resetPheromoneTrails();
-        cy.on('dragfreeon' ,function (event) {
+        cy.on('dragfreeon', function (event) {
             console.log('moved')
             antColony.bestSolutionLength = calcRouteLength(antColony.bestSolution);
             document.getElementById("curBestLength").innerHTML = antColony.bestSolutionLength;
@@ -171,8 +170,7 @@ class AntColony {
         let checkbox = document.getElementById("autoIterationBox");
         if (checkbox.checked) {
             this.autoInterval = setInterval(this.doIteration.bind(antColony), 1500);
-        }
-        else {
+        } else {
             clearInterval(this.autoInterval);
         }
     }
@@ -206,7 +204,7 @@ function resetACO() {
 }
 
 function updateEvap(value) {
-    antColony.evaporation = (100-value)/100;
+    antColony.evaporation = (100 - value) / 100;
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
 
