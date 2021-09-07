@@ -1,10 +1,14 @@
+body {
+    margin: 0;
+}
+
 .container {
     display: grid;
     height: 100vh;
     grid-template-columns: 70% 30%;
     grid-template-rows: 100%;
     grid-auto-flow: row;
-    overflow: hidden;
+    overflow-y: auto;
     grid-template-areas:
     "Visualizer Sidebar";
 }
@@ -14,9 +18,11 @@
     height: 100%;
     grid-area: Visualizer;
     position: relative;
+    overflow-y: hidden;
 }
 
 .Sidebar { grid-area: Sidebar;
+    overflow-y: scroll;
 }
 
 #cy {

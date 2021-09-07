@@ -102,9 +102,9 @@ class AntColony {
         }
         //console.log(pheromones);
         //Beta evaporation
-        /*        for (let i = 0; i < edges.length; i++) {
+               for (let i = 0; i < edges.length; i++) {
                     pheromones[i] *= this.evaporation;
-                }*/
+                }
         //console.log(pheromones);
         for (let i = 0; i < this.population.length; i++) {
             let a = this.population[i];
