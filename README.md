@@ -5,8 +5,6 @@
 
 #//TODO
 * Fix evaporation
-* Add Auto Iteration Repetition
-* Rework Pheromone Highlighting
 * Test Adding more nodes during runtime
 * Fix bugs
 * Clean up code (sorry its my first JS project)
