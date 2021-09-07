@@ -145,3 +145,11 @@ input:checked + .slider:before {
     text-align: left;
     width: 100%;
 }
+
+.bestSolutionContainer {
+
+}
+
+.flexText {
+    flex: 1;
+}

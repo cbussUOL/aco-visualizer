@@ -73,8 +73,12 @@ class AntColony {
         } else {
             for (const a of this.population) {
                 console.log(a.route);
+                console.log(this.bestSolution)
+                console.log(a.route.length)
+                console.log(this.bestSolution.length)
+                console.log(a.route === this.bestSolution);
                 if (calcRouteLength(a.route) < this.bestSolutionLength || a.route.length > this.bestSolution.length) {
-                    this.bestSolution = a.route;
+                    this.bestSolution = a.route.slice();
                     this.bestSolutionLength = calcRouteLength(a.route);
                     this.timesResultChanged++;
                     document.getElementById('curBest').innerHTML = routeToString(this.bestSolution);
