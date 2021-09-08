@@ -4,7 +4,5 @@
 * Based on the Travelling Salesman Problem
 
 #//TODO
-* Fix evaporation
-* Test Adding more nodes during runtime
-* Fix bugs
+* Fix bugs and unintended behaviour
 * Clean up code (sorry its my first JS project)
