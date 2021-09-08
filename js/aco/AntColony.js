@@ -11,8 +11,7 @@ class AntColony {
         this.maxIterations = 10;
         this.bestSolution = null;
         this.bestSolutionLength = null;
-        this.population = [];
-        this.paused = false;
+        this.population = [];;
         this.randomFactor = 0.01;
         this.timesResultChanged = 0;
         this.autoInterval = null;
@@ -239,7 +238,7 @@ function updateEvap(value) {
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
 
-
-
 let antColony = new AntColony();
-antColony.initializeACO();
+document.addEventListener('DOMContentLoaded', function () {
+    antColony.initializeACO();
+})
