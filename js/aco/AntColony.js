@@ -11,7 +11,7 @@ class AntColony {
         this.maxIterations = 10;
         this.bestSolution = null;
         this.bestSolutionLength = null;
-        this.population = [];;
+        this.population = [];
         this.randomFactor = 0.01;
         this.timesResultChanged = 0;
         this.autoInterval = null;
@@ -28,6 +28,7 @@ class AntColony {
                 route.push(chosenNode);
             }
         }
+        route.push(route.first());
         return route;
     }
 
@@ -54,7 +55,7 @@ class AntColony {
 
     //Initializes Population from Scratch
     initPopulation() {
-        //TODO add support for flexible pop sizes
+        this.population = []
         for (let i = 0; i < this.targetPopSize - this.curPopSize; i++) {
             this.population.push(new Ant());
         }
@@ -97,33 +98,39 @@ class AntColony {
         let pheromones = new Array(edges.length);
         let contribution = new Array(edges.length);
         contribution.fill(0);
+        pheromones.fill(0);
+        console.log(pheromones);
+        console.log(contribution);
         for (let i = 0; i < edges.length; i++) {
             pheromones[i] = edges[i].data('pheromoneCount');
         }
         //console.log(pheromones);
-        //Beta evaporation
-               for (let i = 0; i < edges.length; i++) {
-                    pheromones[i] *= this.evaporation;
-                }
+        //Evaporation
+        for (let i = 0; i < edges.length; i++) {
+            edges[i].data('pheromoneCount', edges[i].data('pheromoneCount') * ( 1 - this.evaporation));
+        }
         //console.log(pheromones);
         for (let i = 0; i < this.population.length; i++) {
             let a = this.population[i];
             console.log(a.routeEdges);
             console.log(a.visited);
             let antContribution = this.Q / calcRouteLength(a.routeEdges.connectedNodes())
-            for (let j = 0; j < edges.length; j++) {
+            for (let j = 0; j < a.routeEdges.length; j++) {
                 let element = a.routeEdges[j];
-                if (a.routeEdges.includes(element)) {
-                    contribution[j] += antContribution;
-                }
+                console.log(element);
+                console.log(element.data('pheromoneCount'));
+                element.data('pheromoneCount', element.data('pheromoneCount') + antContribution);
+                    //contribution[j] += antContribution;
+
             }
             //console.log(contribution);
         }
+        console.log("New Pheromones:")
         console.log(pheromones)
         console.log(contribution)
-        for (let i = 0; i < edges.length; i++) {
+/*        for (let i = 0; i < edges.length; i++) {
             edges[i].data('pheromoneCount', pheromones[i] + contribution[i]);
-        }
+        }*/
     }
 
 
@@ -148,6 +155,7 @@ class AntColony {
 
     doIteration() {
         document.getElementById('curIteration').innerHTML = this.curIteration;
+        this.initPopulation();
         this.moveAnts();
         this.updatePheromones();
         this.updateBest()
@@ -214,7 +222,7 @@ function resetACO() {
     resetTable();
 }
 
-function appendRouteTable (route, routeLength, iteration) {
+function appendRouteTable(route, routeLength, iteration) {
     let table = document.getElementById('table');
     let tbody = table.getElementsByTagName('tbody')[0];
     let newRow = tbody.insertRow();
@@ -225,11 +233,11 @@ function appendRouteTable (route, routeLength, iteration) {
     let newText2 = document.createTextNode(routeToString(route));
     newCell2.appendChild(newText2);
     let newCell3 = newRow.insertCell(2);
-    let newText3= document.createTextNode(routeLength);
+    let newText3 = document.createTextNode(routeLength);
     newCell3.appendChild(newText3);
 }
 
-function resetTable () {
+function resetTable() {
     let table = document.getElementById('table');
     let tbody = table.getElementsByTagName('tbody')[0];
     let newTBody = document.createElement('tbody');
