@@ -1,11 +1,11 @@
 class Ant {
 
     constructor() {
+        this.currentNode = cy.nodes()[Math.floor(Math.random() * cy.nodes().length)]
         this.route = cy.collection();
-        this.route.push(startNode);
+        this.route.push(this.currentNode);
         console.log(this.route);
         this.routeEdges = cy.collection();
-        this.currentNode = startNode;
         this.visited = cy.collection();
     }
 
@@ -17,7 +17,6 @@ class Ant {
             console.log(connectedNodes[i]);
             console.log(this.currentNode === connectedNodes[i])
             if (this.currentNode !== connectedNodes[i]) {
-                console.log("hello?");
                 console.log(this.currentNode);
                 this.routeEdges.push(edge);
                 this.currentNode = connectedNodes[i];
@@ -60,8 +59,9 @@ class Ant {
     //This is based on pheromones and distance
     //The two factors are weighted by alpha and beta respectively
     calcProbabilities() {
+        console.log("Calculating probabilities...")
         let edges  = this.currentNode.connectedEdges();
-        //console.log(edges);
+        console.log(edges);
         let probabilities = [edges.length];
         let pheromone = 0.0;
         for (let i = 0; i < edges.length; i++) {
@@ -83,11 +83,11 @@ class Ant {
             //console.log(this.routeEdges.includes(edges[j]))
             console.log(this.route)
             console.log(edges[j].connectedNodes())
-            console.log(this.route.includes(edges[j].connectedNodes()[0]))
-            console.log(this.route.every(c=> edges[j].connectedNodes().includes(c)))
-            console.log(this.route.includes(edges[j].connectedNodes()[0]))
+            //console.log(this.route.includes(edges[j].connectedNodes()[0]))
+            //console.log(this.route.every(c=> edges[j].connectedNodes().includes(c)))
+            //console.log(this.route.includes(edges[j].connectedNodes()[0]))
             if (edges[j].connectedNodes().every(c=> this.route.includes(c))) {
-                console.log('already contains route')
+                console.log('already contains edge')
                 probabilities[j] = 0.0;
             } else {
                 //console.log("numerator case entered")

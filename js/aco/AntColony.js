@@ -77,7 +77,7 @@ class AntColony {
                 console.log(a.route.length)
                 console.log(this.bestSolution.length)
                 console.log(a.route === this.bestSolution);
-                if (calcRouteLength(a.route) < this.bestSolutionLength || a.route.length > this.bestSolution.length) {
+                if (calcRouteLength(a.route) < this.bestSolutionLength || a.route.length !== this.bestSolution.length) {
                     this.bestSolution = a.route.slice();
                     this.bestSolutionLength = calcRouteLength(a.route);
                     this.timesResultChanged++;
@@ -160,11 +160,14 @@ class AntColony {
 
     moveAnts() {
         for (const a of this.population) {
-            while (!a.routeEdges.connectedNodes().same(cy.nodes())) {
-                console.log(a.currentNode)
-                console.log(endNode);
+            while (a.routeEdges.connectedNodes().length < cy.nodes().length) {
+                console.log("Current Node of Ant:");
+                console.log(a.currentNode);
                 a.visitEdge(a.chooseNextEdge());
             }
+            let edgeBackToStart = a.route.last().edgesWith(a.route.first())
+            console.log(edgeBackToStart);
+            a.visitEdge(edgeBackToStart);
             console.log('Calculated Route:')
             console.log(a.routeEdges);
             console.log(calcRouteLength(a.routeEdges.connectedNodes()))

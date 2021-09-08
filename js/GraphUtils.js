@@ -30,8 +30,7 @@ function fitGraphToScreen() {
 function setAsStartNode(node) {
     if (node.length === 0) {
         alert('Please Select a Node')
-    } else
-    if (node.same(endNode)) {
+    } else if (node.same(endNode)) {
         alert('You cant set Start and End to the Same Node')
     } else {
 
@@ -46,8 +45,7 @@ function setAsStartNode(node) {
 function setAsEndNode(node) {
     if (node.length === 0) {
         alert('Please Select a Node')
-    } else
-    if (node.same(startNode)) {
+    } else if (node.same(startNode)) {
         alert('You cant set Start and End to the Same Node')
     } else {
         if (typeof endNode !== 'undefined') {
@@ -62,7 +60,7 @@ function addACONode() {
     let node = cy.add({
         group: 'nodes',
         data: {
-            id: 'N'+ nodeIndex
+            id: 'N' + nodeIndex
         }
     });
     nodeIndex++;
@@ -70,7 +68,7 @@ function addACONode() {
 }
 
 function connectNodeToNetwork(node) {
-    for (let i = 0; i < cy.nodes().length-1; i++){
+    for (let i = 0; i < cy.nodes().length - 1; i++) {
         if (node !== cy.nodes()[i]) {
             let edge = cy.add({
                 group: 'edges',
@@ -80,8 +78,12 @@ function connectNodeToNetwork(node) {
     }
 }
 
+function removeACONode() {
+    cy.remove(cy.nodes().last())
+}
+
 function routeToString(route) {
-    let routeString = route.map(function( ele ){
+    let routeString = route.map(function (ele) {
         return ele.id();
     });
 
