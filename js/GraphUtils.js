@@ -19,8 +19,12 @@ let randomConfig = {
 };
 
 
-function randomizeGraph() {
+function layoutGraph() {
     cy.layout(options).run();
+}
+
+function randomizeGraph() {
+    cy.layout(optionsRandom).run();
 }
 
 function fitGraphToScreen() {
