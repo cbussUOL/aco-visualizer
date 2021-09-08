@@ -50,17 +50,42 @@
                 </label>
             </div>
         </div>
-        <p>Set Evaporation Percentage: </p>
-        <div class="buttons">
-            <input type="range" min='0' max="100" value="50" class="evapSlider" id="evapSlider"
-                   onchange="updateEvap(value)"> <label for="evapSlider" id="evapLabel">50%</label>
+        <div class="controlContainer">
+            Variable Configuration
+            <div class="controlElements">
+            <label for="evapSlider">Set Evaporation Percentage: </label>
+                <input type="range" min='0' max="100" value="50" class="evapSlider" id="evapSlider"
+                       oninput="updateEvap(value)"> <label for="evapSlider" id="evapLabel">50%</label>
+            </div>
+            <div class="controlElements">
+                <label for="population">Population Size (Default: 10):</label>
+                <input type="number" id="population" name="population" class="input"
+                       min="1" max="100" value="10" onchange="antColony.targetPopSize = value">
+            </div>
+            <div class="controlElements">
+                <label for="alpha">Alpha Variable (Default :1):</label>
+                <input type="number" id="alpha" name="alpha" class="input"
+                       min="1" max="100" value="1" onchange="antColony.alpha = value">
+            </div>
+            <div class="controlElements">
+                <label for="beta">Beta Variable (Default: 5):</label>
+                <input type="number" id="beta" name="beta" class="input"
+                       min="1" max="100" value="5" onchange="antColony.beta = value">
+            </div>
+
+            <div class="controlElements">
+                <label for="q">Q Variable (Default: 500):</label>
+                <input type="number" id="q" name="q" class="input"
+                       min="1" max="1000" value="500" onchange="antColony.Q = value">
+            </div>
         </div>
         <div>
-            <div class="buttons">
+            ACO Output
+            <div class="controlElements">
                 <div class="flexText">Current Best Solution: <p id="curBest"> 0 </p></div>
                 <div class="flexText">Length: <p id='curBestLength'> 0 </p></div>
             </div>
-            <div class="buttons">
+            <div class="controlElements">
                 <div class="flexText">Current Iteration: <p id='curIteration'> 0 </p></div>
                 <div class="flexText">Times Result Changed: <p id='resultChangedCount'> 0 </p></div>
             </div>

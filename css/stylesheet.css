@@ -21,7 +21,9 @@ body {
     overflow-y: hidden;
 }
 
-.Sidebar { grid-area: Sidebar;
+.Sidebar {
+    margin-right: 8px;
+    grid-area: Sidebar;
     overflow-y: scroll;
 }
 
@@ -33,14 +35,14 @@ body {
     max-height: 100%;
 }
 
-.buttons{
+.buttons {
     display: flex;
     justify-content: center;
     flex: 1;
     flex-wrap: wrap;
 }
 
-.checkbox{
+.checkbox {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -62,19 +64,14 @@ body {
     transition-duration: 0.4s
 }
 
-.btn:active{
+.btn:active {
     transform: scale(0.95);
 }
 
-.btn:hover{
+.btn:hover {
     background-color: royalblue;
 }
 
-.slidercontainer {
-    display: flex;
-    width: 100%; /* Width of the outside container */
-    align-items: center;
-}
 
 .evapSlider {
     width: 90%;
@@ -156,6 +153,27 @@ input:checked + .slider:before {
 
 }
 
+input, label {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    margin-right: 8px;
+    width: 50%;
+}
+#evapSlider {
+    width: 40%;
+}
+#evapLabel {
+    width: auto;
+}
+
+input {
+    flex: 1;
+}
+
 .flexText {
     flex: 1;
+}
+
+.controlElements {
+    display: flex;
 }

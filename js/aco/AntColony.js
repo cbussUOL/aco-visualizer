@@ -1,12 +1,11 @@
 //Manages Colony of Ant Objects and passes results
 class AntColony {
     constructor() {
-        this.evaporation = 0.5;
-        this.Q = 500;
-        this.alpha = 1;
-        this.beta = 5;
-        this.targetPopSize = 10;
-        this.curPopSize = 0;
+        this.evaporation =(100 - document.getElementById('evapSlider').value) / 100
+        this.Q = document.getElementById('q').value;
+        this.alpha = document.getElementById('alpha').value;
+        this.beta = document.getElementById('beta').value;
+        this.targetPopSize = document.getElementById('population').value;
         this.curIteration = 0;
         this.maxIterations = 10;
         this.bestSolution = null;
@@ -56,7 +55,7 @@ class AntColony {
     //Initializes Population from Scratch
     initPopulation() {
         this.population = []
-        for (let i = 0; i < this.targetPopSize - this.curPopSize; i++) {
+        for (let i = 0; i < this.targetPopSize; i++) {
             this.population.push(new Ant());
         }
     }
@@ -249,7 +248,8 @@ function updateEvap(value) {
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
 
-let antColony = new AntColony();
+let antColony = null;
 document.addEventListener('DOMContentLoaded', function () {
+    antColony = new AntColony();
     antColony.initializeACO();
 })
