@@ -1,7 +1,7 @@
 //Manages Colony of Ant Objects and passes results
 class AntColony {
     constructor() {
-        this.evaporation =(100 - document.getElementById('evapSlider').value) / 100
+        this.evaporation = (100 - document.getElementById('evapSlider').value) / 100
         this.Q = document.getElementById('q').value;
         this.alpha = document.getElementById('alpha').value;
         this.beta = document.getElementById('beta').value;
@@ -105,31 +105,35 @@ class AntColony {
         }
         //console.log(pheromones);
         //Evaporation
-        for (let i = 0; i < edges.length; i++) {
-            edges[i].data('pheromoneCount', edges[i].data('pheromoneCount') * ( 1 - this.evaporation));
-        }
+        cy.batch(function () {
+            for (let i = 0; i < edges.length; i++) {
+                edges[i].data('pheromoneCount', edges[i].data('pheromoneCount') * (1 - this.evaporation));
+            }
+        }.bind(this));
         //console.log(pheromones);
         for (let i = 0; i < this.population.length; i++) {
             let a = this.population[i];
             console.log(a.routeEdges);
             console.log(a.visited);
             let antContribution = this.Q / calcRouteLength(a.routeEdges.connectedNodes())
-            for (let j = 0; j < a.routeEdges.length; j++) {
-                let element = a.routeEdges[j];
-                console.log(element);
-                console.log(element.data('pheromoneCount'));
-                element.data('pheromoneCount', Math.max(element.data('pheromoneCount') + antContribution), 1);
+            cy.batch(function () {
+                for (let j = 0; j < a.routeEdges.length; j++) {
+                    let element = a.routeEdges[j];
+                    console.log(element);
+                    console.log(element.data('pheromoneCount'));
+                    element.data('pheromoneCount', Math.max(element.data('pheromoneCount') + antContribution), 1);
                     //contribution[j] += antContribution;
 
-            }
+                }
+            }.bind(this));
             //console.log(contribution);
         }
         console.log("New Pheromones:")
         console.log(pheromones)
         console.log(contribution)
-/*        for (let i = 0; i < edges.length; i++) {
-            edges[i].data('pheromoneCount', pheromones[i] + contribution[i]);
-        }*/
+        /*        for (let i = 0; i < edges.length; i++) {
+                    edges[i].data('pheromoneCount', pheromones[i] + contribution[i]);
+                }*/
     }
 
 
