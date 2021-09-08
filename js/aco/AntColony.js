@@ -68,6 +68,7 @@ class AntColony {
             this.bestSolutionLength = calcRouteLength(this.bestSolution);
             document.getElementById('curBest').innerHTML = routeToString(this.bestSolution) + ' (Initial Random Result)';
             document.getElementById('curBestLength').innerHTML = this.bestSolutionLength + ' (Initial Random Result)';
+            document.getElementById('resultChangedCount').innerHTML = '0';
             //this.bestSolution = this.population[0].route;
             //this.bestSolutionLength = this.population[0].calcRouteLength();
         } else {
@@ -207,6 +208,8 @@ function calcRouteLength(route) {
 
 function resetACO() {
     antColony = new AntColony();
+    antColony.initializeACO();
+    resetTable();
 }
 
 function appendRouteTable (route, routeLength, iteration) {
@@ -224,10 +227,19 @@ function appendRouteTable (route, routeLength, iteration) {
     newCell3.appendChild(newText3);
 }
 
+function resetTable () {
+    let table = document.getElementById('table');
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let newTBody = document.createElement('tbody');
+    table.replaceChild(newTBody, tbody);
+}
+
 function updateEvap(value) {
     antColony.evaporation = (100 - value) / 100;
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
 
 
+
 let antColony = new AntColony();
+antColony.initializeACO();
