@@ -18,7 +18,7 @@ class AntColony {
 
     generateRandomSolution() {
         let route = cy.collection();
-        route.push(startNode);
+        route.push(cy.nodes()[Math.floor(Math.random() * cy.nodes().length)])
         while (!route.same(cy.nodes())) {
             let edges = route[route.length - 1].connectedEdges();
             let targets = edges.connectedNodes();
@@ -118,7 +118,7 @@ class AntColony {
                 let element = a.routeEdges[j];
                 console.log(element);
                 console.log(element.data('pheromoneCount'));
-                element.data('pheromoneCount', element.data('pheromoneCount') + antContribution);
+                element.data('pheromoneCount', Math.max(element.data('pheromoneCount') + antContribution), 1);
                     //contribution[j] += antContribution;
 
             }

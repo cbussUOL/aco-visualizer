@@ -28,16 +28,15 @@
             <button type="button" class="btn" onclick="layoutGraph()">Layout Graph</button>
             <button type="button" class="btn" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
             <button type="button" class="btn" onclick="addACONode()">Add Node</button>
-            <button type="button" class="btn" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start
+<!--            <button type="button" class="btn" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start
             </button>
             <button type="button" class="btn" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End
-            </button>
+            </button>-->
         </div>
         ACO Operations
         <div class="buttons">
             <button type="button" class="btn" onclick="antColony.doIteration()">Run Iteration</button>
             <button type="button" class="btn" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
-            <button type="button" class="btn" onclick="antColony.initializeACO()">Initialize ACO</button>
             <button type="button" class="btn" onclick="resetACO()">Reset ACO</button>
         </div>
         <div class="checkbox">
@@ -74,9 +73,9 @@
             </div>
 
             <div class="controlElements">
-                <label for="q">Q Variable (Default: 500):</label>
+                <label for="q">Q Variable (Default: 1000):</label>
                 <input type="number" id="q" name="q" class="input"
-                       min="1" max="1000" value="500" onchange="antColony.Q = value">
+                       min="1"  value="2000" onchange="antColony.Q = value">
             </div>
         </div>
         <div>

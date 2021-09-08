@@ -138,9 +138,9 @@ let optionsRandom = {
     } // transform a given node position. Useful for changing flow direction in discrete layouts
 
 }
-setAsStartNode(cy.nodes().first());
+//setAsStartNode(cy.nodes().first());
 console.log(startNode);
-setAsEndNode(cy.nodes().last());
+//setAsEndNode(cy.nodes().last());
 console.log(endNode);
 cy.layout(options);
 cy.layout(options).run();
