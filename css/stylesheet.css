@@ -37,7 +37,7 @@ body {
 
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     flex: 1;
     flex-wrap: wrap;
 }
@@ -70,6 +70,22 @@ body {
 
 .btn:hover {
     background-color: royalblue;
+}
+
+.run {
+    background-color: green;
+}
+
+.run:hover {
+    background-color: darkgreen;
+}
+
+.reset {
+    background-color: red;
+}
+
+.reset:hover {
+    background-color: darkred;
 }
 
 
@@ -159,9 +175,11 @@ input, label {
     margin-right: 8px;
     width: 50%;
 }
+
 #evapSlider {
     width: 40%;
 }
+
 #evapLabel {
     width: auto;
 }

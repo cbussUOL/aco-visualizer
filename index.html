@@ -28,6 +28,7 @@
             <button type="button" class="btn" onclick="layoutGraph()">Layout Graph</button>
             <button type="button" class="btn" onclick="fitGraphToScreen()">Fit Graph to Screen</button>
             <button type="button" class="btn" onclick="addACONode()">Add Node</button>
+            <button type="button" class="btn" onclick="removeACONode()">Remove Node</button>
 <!--            <button type="button" class="btn" onclick="setAsStartNode(cy.$(':selected'))">Mark selected Node as Start
             </button>
             <button type="button" class="btn" onclick="setAsEndNode(cy.$(':selected'))">Mark selected Node as End
@@ -35,9 +36,9 @@
         </div>
         ACO Operations
         <div class="buttons">
-            <button type="button" class="btn" onclick="antColony.doIteration()">Run Iteration</button>
-            <button type="button" class="btn" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
-            <button type="button" class="btn" onclick="resetACO()">Reset ACO</button>
+            <button type="button" class="btn run" onclick="antColony.doIteration()">▶ Run Iteration</button>
+            <button type="button" class="btn reset" onclick="resetPheromoneTrails()">Reset Pheromone Counts</button>
+            <button type="button" class="btn reset" onclick="resetACO()">Reset ACO</button>
         </div>
         <div class="checkbox">
             <div>Auto Iteration:</div>
@@ -62,7 +63,7 @@
                        min="1" max="100" value="10" onchange="antColony.targetPopSize = value">
             </div>
             <div class="controlElements">
-                <label for="alpha">Alpha Variable (Default :1):</label>
+                <label for="alpha">Alpha Variable (Default: 1):</label>
                 <input type="number" id="alpha" name="alpha" class="input"
                        min="1" max="100" value="1" onchange="antColony.alpha = value">
             </div>
