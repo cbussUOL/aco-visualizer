@@ -57,6 +57,7 @@
                 <input type="range" min='0' max="100" value="50" class="evapSlider" id="evapSlider"
                        oninput="updateEvap(value)"> <label for="evapSlider" id="evapLabel">50%</label>
             </div>
+            <script>document.getElementById("evapLabel").innerText = document.getElementById("evapSlider").value + "%"</script>
             <div class="controlElements">
                 <label for="population">Population Size (Default: 10):</label>
                 <input type="number" id="population" name="population" class="input"
