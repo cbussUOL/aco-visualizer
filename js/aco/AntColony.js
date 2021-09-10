@@ -78,6 +78,7 @@ class AntColony {
                 console.log(this.bestSolution.length)
                 console.log(a.route === this.bestSolution);
                 if (calcRouteLength(a.route) < this.bestSolutionLength || a.route.length !== this.bestSolution.length) {
+                    this.bestSolution.first().removeClass('startNode');
                     this.bestSolution = a.route.slice();
                     this.bestSolutionLength = calcRouteLength(a.route);
                     this.timesResultChanged++;
@@ -85,6 +86,7 @@ class AntColony {
                     document.getElementById('curBestLength').innerHTML = this.bestSolutionLength;
                     document.getElementById('resultChangedCount').innerHTML = this.timesResultChanged;
                     appendRouteTable(this.bestSolution, this.bestSolutionLength, this.curIteration);
+                    this.bestSolution.first().addClass('startNode');
                 }
 
             }
