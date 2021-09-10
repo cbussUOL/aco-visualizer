@@ -142,7 +142,7 @@ let optionsRandom = {
 console.log(startNode);
 //setAsEndNode(cy.nodes().last());
 console.log(endNode);
-cy.layout(options);
-cy.layout(options).run();
+//cy.layout(options);
+//cy.layout(options).run();
 cy.fit();
 cy.resize();

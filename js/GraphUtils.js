@@ -61,8 +61,12 @@ function setAsEndNode(node) {
 }
 
 function addACONode() {
+    let extent = cy.extent();
+    let nodeX = Math.random() * (extent['x2'] - extent['x1']) + extent['x1'];
+    let nodeY = Math.random() * (extent['y2'] - extent['y1']) + extent['y1'];
     let node = cy.add({
         group: 'nodes',
+        position: {x: nodeX, y: nodeY},
         data: {
             id: 'N' + nodeIndex
         }
@@ -88,7 +92,7 @@ function removeACONode() {
 
 function routeToString(route) {
     let routeString = route.map(function (ele) {
-        return ele.id();
+        return " " + ele.id();
     });
 
     console.log(routeString);

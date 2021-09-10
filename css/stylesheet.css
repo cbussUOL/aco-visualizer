@@ -189,7 +189,8 @@ input {
 }
 
 .flexText {
-    flex: 1;
+    flex: 1 1;
+    max-width: 50%;
 }
 
 .controlElements {
