@@ -217,6 +217,7 @@ function calcRouteLength(route) {
 function resetACO() {
     antColony = new AntColony();
     antColony.initializeACO();
+    document.getElementById('curIteration').innerText = "0";
     resetTable();
 }
 
