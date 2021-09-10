@@ -62,21 +62,16 @@ class AntColony {
 
     //Updates the best solution
     updateBest() {
+        //Generates random solution if no best Solution set
         if (this.bestSolution === null) {
             this.bestSolution = this.generateRandomSolution();
             this.bestSolutionLength = calcRouteLength(this.bestSolution);
             document.getElementById('curBest').innerHTML = routeToString(this.bestSolution) + ' (Initial Random Result)';
             document.getElementById('curBestLength').innerHTML = this.bestSolutionLength + ' (Initial Random Result)';
             document.getElementById('resultChangedCount').innerHTML = '0';
-            //this.bestSolution = this.population[0].route;
-            //this.bestSolutionLength = this.population[0].calcRouteLength();
         } else {
             for (const a of this.population) {
-                console.log(a.route);
-                console.log(this.bestSolution)
-                console.log(a.route.length)
-                console.log(this.bestSolution.length)
-                console.log(a.route === this.bestSolution);
+                //Condition for new best is either a shorter route or change of nodes in graph
                 if (calcRouteLength(a.route) < this.bestSolutionLength || a.route.length !== this.bestSolution.length) {
                     this.bestSolution.first().removeClass('startNode');
                     this.bestSolution = a.route.slice();
@@ -115,14 +110,14 @@ class AntColony {
         //console.log(pheromones);
         for (let i = 0; i < this.population.length; i++) {
             let a = this.population[i];
-            console.log(a.routeEdges);
-            console.log(a.visited);
+            //console.log(a.routeEdges);
+            //console.log(a.visited);
             let antContribution = this.Q / calcRouteLength(a.routeEdges.connectedNodes())
             cy.batch(function () {
                 for (let j = 0; j < a.routeEdges.length; j++) {
                     let element = a.routeEdges[j];
-                    console.log(element);
-                    console.log(element.data('pheromoneCount'));
+                    //console.log(element);
+                    //console.log(element.data('pheromoneCount'));
                     element.data('pheromoneCount', Math.max(element.data('pheromoneCount') + antContribution), 1);
                     //contribution[j] += antContribution;
 
@@ -139,19 +134,16 @@ class AntColony {
     }
 
 
-    start() {
-        console.log('Starting Algorithm...');
-        this.initializeACO();
-    }
-
+    //Compound function that sets up ACO structure
     initializeACO() {
         console.log("Initializing population...");
         this.initPopulation();
         console.log("Updating best solution...");
         this.updateBest();
         resetPheromoneTrails();
-        cy.on('dragfreeon', function (event) {
-            console.log('moved')
+        //Event that updates route length on change of graph
+        cy.on('position', function (event) {
+            //console.log('Node moved');
             antColony.bestSolutionLength = calcRouteLength(antColony.bestSolution);
             document.getElementById("curBestLength").innerHTML = antColony.bestSolutionLength;
         });
@@ -170,7 +162,7 @@ class AntColony {
         this.curIteration++;
     }
 
-
+    //Method that generates a solution for every Ant of the population
     moveAnts() {
         for (const a of this.population) {
             while (a.routeEdges.connectedNodes().length < cy.nodes().length) {
@@ -178,15 +170,17 @@ class AntColony {
                 console.log(a.currentNode);
                 a.visitEdge(a.chooseNextEdge());
             }
+            //Add return back to initial node to complete round trip
             let edgeBackToStart = a.route.last().edgesWith(a.route.first())
-            console.log(edgeBackToStart);
+            //console.log(edgeBackToStart);
             a.visitEdge(edgeBackToStart);
             console.log('Calculated Route:')
             console.log(a.routeEdges);
-            console.log(calcRouteLength(a.routeEdges.connectedNodes()))
+            console.log('Route Length: ' + calcRouteLength(a.routeEdges.connectedNodes()))
         }
     }
 
+    //Enables and disables automatic Iteration interval
     toggleAutoIteration() {
         let checkbox = document.getElementById("autoIterationBox");
         if (checkbox.checked) {
@@ -207,7 +201,6 @@ function calcDistanceBetweenPoints(point1, point2) {
 
 function resetPheromoneTrails() {
     let edges = cy.edges();
-    console.log(edges.length);
     for (let i = 0; i < edges.length; i++) {
         edges[i].data('pheromoneCount', 1)
     }
@@ -250,7 +243,7 @@ function resetTable() {
 }
 
 function updateEvap(value) {
-    antColony.evaporation =  value / 100;
+    antColony.evaporation = value / 100;
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
 
