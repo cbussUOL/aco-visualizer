@@ -2,6 +2,7 @@
 * Interactive visualisation for the Ant Colony Optimization Problem
 * Algorithm Based on Marco Dorigos Ant Colony Optimization
 * Based on the Travelling Salesman Problem
+* Visualization is done using the Framework Cytoscape.js (https://js.cytoscape.org/)
 
 ## Usage
 The application is started by opening the index.html file in any modern web browser of choice. The program has been tested with Firefox 92.0 and Chrome 93.0.
