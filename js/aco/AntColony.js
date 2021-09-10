@@ -1,7 +1,7 @@
 //Manages Colony of Ant Objects and passes results
 class AntColony {
     constructor() {
-        this.evaporation = (100 - document.getElementById('evapSlider').value) / 100
+        this.evaporation = document.getElementById('evapSlider').value / 100;
         this.Q = document.getElementById('q').value;
         this.alpha = document.getElementById('alpha').value;
         this.beta = document.getElementById('beta').value;
@@ -250,7 +250,7 @@ function resetTable() {
 }
 
 function updateEvap(value) {
-    antColony.evaporation = (100 - value) / 100;
+    antColony.evaporation =  value / 100;
     document.getElementById('evapLabel').innerHTML = value + '%';
 }
 
