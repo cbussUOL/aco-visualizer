@@ -215,6 +215,8 @@ function calcRouteLength(route) {
 }
 
 function resetACO() {
+    document.getElementById('autoIterationBox').checked = false;
+    clearInterval(antColony.autoInterval);
     antColony = new AntColony();
     antColony.initializeACO();
     document.getElementById('curIteration').innerText = "0";
